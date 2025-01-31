@@ -117,8 +117,6 @@ class Obstacle {
     this.game.scene.remove(this.model);
     this.disposeRecursively(this.model);
 
-    this.game.enemies = this.game.enemies.filter((enemy) => enemy !== this);
-
     this.game.obstacleManager.dodged++;
   }
 }
