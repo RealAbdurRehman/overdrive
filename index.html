@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A fast-paced game where you dodge obstacles, push your car to its top speed, cover massive distances, and have a blast along the way!" />
+    <title>OVERDRIVE</title>
+    <link rel="icon" type="image/x-icon" href="./public/Icon/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Oxanium:wght@200..800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/keyboard-css@1.2.4/dist/css/main.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <div id="hider"></div>
+
+    <div id="loading-screen">
+      <div class="corner-accent top-left"></div>
+      <div class="corner-accent top-right"></div>
+      <div class="corner-accent bottom-left"></div>
+      <div class="corner-accent bottom-right"></div>
+      <div class="loading-content">
+        <div class="game-logo">
+          <h1>OVER<span>DRIVE</span></h1>
+          <div class="logo-underline"></div>
+        </div>
+        <div class="loading-bar-container">
+          <div class="loading-status">
+            <span class="loading-text">INITIALIZING</span>
+            <span class="loading-percentage">0%</span>
+          </div>
+          <div class="loading-bar">
+            <div class="loading-progress"></div>
+          </div>
+        </div>
+        <div class="loading-tips">
+          <div class="tip-container">
+            <p class="tip-text"></p>
+          </div>
+        </div>
+      </div>
+      <div class="racing-accent"></div>
+      <div class="exit-transition">
+        <div class="transition-panel left"></div>
+        <div class="transition-panel right"></div>
+      </div>
+    </div>
+
+    <div id="death-screen">
+      <div class="corner-accent top-left"></div>
+      <div class="corner-accent top-right"></div>
+      <div class="corner-accent bottom-left"></div>
+      <div class="corner-accent bottom-right"></div>
+      <div class="death-content">
+        <div class="game-over">
+          <h2>GAME<span>OVER</span></h2>
+          <div class="logo-underline"></div>
+        </div>
+        <div class="death-stats">
+          <div class="stat">
+            <span class="stat-label">DISTANCE</span>
+            <span class="stat-value" id="final-distance">0m</span>
+            <div class="stat-bar">
+              <div class="stat-fill"></div>
+            </div>
+          </div>
+          <div class="stat">
+            <span class="stat-label">TOP SPEED</span>
+            <span class="stat-value" id="top-speed">0 KM/H</span>
+            <div class="stat-bar">
+              <div class="stat-fill"></div>
+            </div>
+          </div>
+          <div class="stat">
+            <span class="stat-label">OBSTACLES DODGED</span>
+            <span class="stat-value" id="obstacles-dodged">0</span>
+            <div class="stat-bar">
+              <div class="stat-fill"></div>
+            </div>
+          </div>
+        </div>
+        <div class="rank-display">
+          <div class="rank-label">RANK</div>
+          <div class="rank-value"></div>
+        </div>
+        <div class="message-container">
+          <p class="death-message"></p>
+        </div>
+        <button id="restart">
+          <span class="btn-text">RETRY</span>
+          <div class="btn-accent"></div>
+        </button>
+      </div>
+      <div class="racing-accent"></div>
+    </div>
+
+    <div id="pause-screen">
+      <div class="corner-accent top-left"></div>
+      <div class="corner-accent top-right"></div>
+      <div class="corner-accent bottom-left"></div>
+      <div class="corner-accent bottom-right"></div>
+      <div class="pause-overlay"></div>
+      <div class="pause-content">
+        <div class="pause-header">
+          <div class="pause-title">
+            <h2>GAME<span>PAUSED</span></h2>
+            <div class="logo-underline"></div>
+          </div>
+        </div>
+        <div class="pause-info">
+          <div class="control-hint">
+            <div class="key-container">
+              <i class="fas fa-keyboard"></i>
+              <span>Press <kbd>P</kbd> to Resume</span>
+            </div>
+          </div>
+          <div class="stats-preview">
+            <div class="stat">
+              <div class="stat-icon">
+                <i class="fas fa-tachometer-alt"></i>
+              </div>
+              <span class="stat-label">CURRENT SPEED</span>
+              <span class="stat-value" id="pause-speed">0 KM/H</span>
+              <div class="stat-bar">
+                <div class="stat-fill stat-fill-pause"></div>
+              </div>
+            </div>
+            <div class="stat">
+              <div class="stat-icon">
+                <i class="fas fa-road"></i>
+              </div>
+              <span class="stat-label">DISTANCE</span>
+              <span class="stat-value" id="pause-distance">0m</span>
+              <div class="stat-bar">
+                <div class="stat-fill stat-fill-pause"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pause-grid">
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+      </div>
+      <div class="racing-accent"></div>
+    </div>
+
+    <div class="controls controls-temporary">
+      <p class="control-label">Gas</p>
+      <div class="key-row">
+        <kbd class="kbc-button">W</kbd>
+      </div>
+      <p class="control-label">Brake / Reverse</p>
+      <div class="key-row">
+        <kbd class="kbc-button">S</kbd>
+      </div>
+      <p class="control-label">Steer</p>
+      <div class="steer-keys key-row">
+        <p class="control-label">Left</p>
+        <kbd class="kbc-button">A</kbd>
+        <p class="control-label">Right</p>
+        <kbd class="kbc-button">D</kbd>
+      </div>
+      <div class="similar-keys">
+        <p class="control-label">Pause / Unpause</p>
+        <kbd class="kbc-button key-row">P</kbd>
+        <p class="control-label">Controls</p>
+        <kbd class="kbc-button key-row">C</kbd>
+      </div>
+      <div class="controls-text">Hold C anytime to view the controls</div>
+    </div>
+    
+    <div id="controls" class="controls" style="opacity: 0;">
+      <p class="control-label">Gas</p>
+      <div class="key-row">
+        <kbd class="kbc-button">W</kbd>
+      </div>
+      <p class="control-label">Brake / Reverse</p>
+      <div class="key-row">
+        <kbd class="kbc-button">S</kbd>
+      </div>
+      <p class="control-label">Steer</p>
+      <div class="steer-keys key-row">
+        <p class="control-label">Left</p>
+        <kbd class="kbc-button">A</kbd>
+        <p class="control-label">Right</p>
+        <kbd class="kbc-button">D</kbd>
+      </div>
+      <div class="similar-keys">
+        <p class="control-label">Pause / Unpause</p>
+        <kbd class="kbc-button key-row">P</kbd>
+        <p class="control-label">Controls</p>
+        <kbd class="kbc-button key-row">C</kbd>
+      </div>
+    </div>
+    <script src="./src/main.js" type="module"></script>
+  </body>
+</html>
