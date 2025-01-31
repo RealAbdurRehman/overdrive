@@ -131,4 +131,6 @@ To contribute to **OverDrive**, please follow these steps:
 
 This game is open-source and licensed under the MIT License. See the [LICENSE](https://github.com/RealAbdurRehman/overdrive/blob/main/LICENSE) file for details.
 
+---
+
 <p align="center"><i>Keep driving, keep improving, and see how far you can go.</i></p>
