@@ -6,6 +6,7 @@ import Ground from "./Ground.js";
 import Camera from "./Camera.js";
 import InputHandler from "./InputHandler.js";
 import ObstacleManager from "./ObstacleManager.js";
+import RampManager from "./RampManager.js";
 import Speedometer from "./ui/Speedometer.js";
 import Tachometer from "./ui/Tachometer.js";
 import DamageMeter from "./ui/DamageMeter.js";
@@ -61,10 +62,9 @@ export default class Game {
     this.tachometer = new Tachometer({ game: this });
     this.damageMeter = new DamageMeter({ game: this });
     this.rearviewMirror = new RearviewMirror({ game: this });
+    this.rampManager = new RampManager({ game: this });
 
     this.timeStep = 1 / 60;
-
-    this.enemies = [];
 
     createBackground(
       "/Background/background.hdr",
