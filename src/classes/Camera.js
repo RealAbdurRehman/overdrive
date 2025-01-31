@@ -22,7 +22,7 @@ export default class Camera {
 
       lookAheadBase: 3,
       lookAheadMaxSpeed: 7,
-      speedHeightReduction: 1,
+      speedHeightReduction: 0.125,
       speedDistanceIncrease: 1.5,
 
       baseFOV: 75,
@@ -49,6 +49,12 @@ export default class Camera {
 
     this.timeToNewShake = 1000;
     this.lastShake = this.timeToNewShake;
+
+    this.verticalVelocity = 0;
+    this.verticalDamping = 0.92;
+    this.landingSmoothing = 0.15;
+    this.lastGroundHeight = 0;
+    this.isInAir = false;
 
     this.setupPostProcessing();
   }
@@ -181,12 +187,47 @@ export default class Camera {
     const forward = new THREE.Vector3(0, 0, -1);
     forward.applyQuaternion(playerQuat);
 
-    this.idealPosition
-      .copy(playerPos)
-      .sub(forward.multiplyScalar(dynamicDistance))
-      .add(new THREE.Vector3(0, dynamicHeight, 0));
+    const raycaster = new THREE.Raycaster();
+    raycaster.set(playerPos, new THREE.Vector3(0, -1, 0));
+    const groundIntersects = raycaster.intersectObjects(
+      [this.game.ground.model],
+      true
+    );
 
-    this.position.lerp(this.idealPosition, this.settings.positionLag);
+    if (groundIntersects.length > 0) {
+      const groundHeight = groundIntersects[0].point.y;
+
+      if (this.isInAir) {
+        this.verticalVelocity = (groundHeight - this.lastGroundHeight) / delta;
+        this.isInAir = false;
+      }
+
+      this.verticalVelocity *= this.verticalDamping;
+      const smoothedHeight = dynamicHeight + this.verticalVelocity * delta;
+
+      this.idealPosition
+        .copy(playerPos)
+        .sub(forward.multiplyScalar(dynamicDistance))
+        .add(new THREE.Vector3(0, smoothedHeight, 0));
+
+      this.lastGroundHeight = groundHeight;
+    } else {
+      this.isInAir = true;
+      this.idealPosition
+        .copy(playerPos)
+        .sub(forward.multiplyScalar(dynamicDistance))
+        .add(new THREE.Vector3(0, dynamicHeight, 0));
+    }
+
+    const positionLag = this.isInAir
+      ? this.settings.positionLag
+      : THREE.MathUtils.lerp(
+          this.settings.positionLag,
+          this.landingSmoothing,
+          Math.abs(this.verticalVelocity) / 10
+        );
+
+    this.position.lerp(this.idealPosition, positionLag);
 
     this.updateShake(speed);
     this.updateBanking(steeringAngle, speed);
@@ -220,17 +261,14 @@ export default class Camera {
     this.updateFOV(speed);
     this.updateMotionBlur(speed);
 
-    const raycaster = new THREE.Raycaster();
-    raycaster.set(playerPos, new THREE.Vector3(0, -1, 0));
-    const groundIntersects = raycaster.intersectObjects(
-      [this.game.ground.model],
-      true
-    );
-
     if (groundIntersects.length > 0) {
       const minHeight = groundIntersects[0].point.y + 1;
       if (this.camera.position.y < minHeight)
-        this.camera.position.y = minHeight;
+        this.camera.position.y = THREE.MathUtils.lerp(
+          this.camera.position.y,
+          minHeight,
+          this.landingSmoothing
+        );
     }
   }
   triggerShake(intensity = 1) {
