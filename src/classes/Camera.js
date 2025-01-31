@@ -80,7 +80,6 @@ export default class Camera {
           vec2 blurVector = vec2(velocityFactor * 0.01, 0.0);
           vec4 color = vec4(0.0);
           
-          // Use texture() instead of texture2D()
           for(float i = -2.0; i <= 2.0; i++) {
             color += texture(tDiffuse, vUv + blurVector * i) / 5.0;
           }
