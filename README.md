@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="">
+  <img src="https://cloud-hz5asbw30-hack-club-bot.vercel.app/0logo.png">
   <br />
   <i>Speed. Skill. Survival.</i>
   <br />
@@ -12,7 +12,7 @@
 <p align="center">
 	<img src="" alt="Demo">
 	<br>
-	<a href="">Live demo</a>
+	<a href="https://overdrive-indol.vercel.app/">Live demo</a>
 	<br>
 </p>
 
