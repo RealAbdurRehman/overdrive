@@ -36,19 +36,18 @@
 
 ## 🕹️ **Controls**
 
-| Action          | Key |
-| --------------- | --- |
-| Gas             | `W` |
-| Brake / Reverse | `S` |
-| Steer Left      | `A` |
-| Steer Right     | `D` |
-| Pause / Unpause | `P` |
-| Controls        | `C` |
+| Action          | Key       |
+| --------------- | --------- |
+| Gas             | `W` / `↑` |
+| Brake / Reverse | `S` / `↓` |
+| Steer Left      | `A` / `←` |
+| Steer Right     | `D` / `→` |
+| Pause / Unpause | `P`       |
+| Controls        | `C`       |
 
 ## 📈 **Future Improvements**
 
 - Integrating audio features
-- Implementing ramps for enhanced gameplay
 - Introducing handbrake functionality and drifting mechanics
 - Introducing a variety of new obstacles
 - Adding pursuing enemy cars that chase the player
