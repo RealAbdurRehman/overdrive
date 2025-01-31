@@ -112,8 +112,4 @@ export default class ObstacleManager {
     this.spawnObstacles();
     this.obstacles.forEach((obstacle) => obstacle.update());
   }
-  cleanup() {
-    this.obstacles.forEach((obstacle) => obstacle.remove());
-    this.obstacles = [];
-  }
 }
