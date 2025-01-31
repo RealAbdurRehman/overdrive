@@ -6,7 +6,7 @@ import { GLTFLoader } from "three/examples/jsm/Addons.js";
 export default class Player {
   constructor({
     game = null,
-    position = new CANNON.Vec3(0, 1, 0),
+    position = new CANNON.Vec3(0, 2, 0),
     dimensions = { width: 1, height: 0.5, depth: 3 },
   }) {
     this.game = game;
@@ -250,14 +250,20 @@ export default class Player {
     const prevSpeed = this.currentSpeed;
     const speedFactor = Math.max(0, 1 - velocity / (this.maxSpeed * 0.7));
 
-    if (this.game.input.keys.includes("KeyW")) {
+    if (
+      this.game.input.keys.includes("KeyW") ||
+      this.game.input.keys.includes("ArrowUp")
+    ) {
       const accelerationMultiplier = speedFactor * this.acceleration.forward;
       this.currentSpeed = Math.min(
         this.currentSpeed + accelerationMultiplier,
         this.maxSpeed
       );
       this.engineForce = this.currentSpeed * this.traction.distribution;
-    } else if (this.game.input.keys.includes("KeyS")) {
+    } else if (
+      this.game.input.keys.includes("KeyS") ||
+      this.game.input.keys.includes("ArrowDown")
+    ) {
       if (this.speedForward < 0) this.brake = this.brakeForce;
       const reverseMultiplier =
         this.acceleration.reverse * (1 - velocity / 1000);
@@ -279,10 +285,16 @@ export default class Player {
       this.engineForce = this.currentSpeed * Math.sign(this.speedForward);
     }
 
-    if (this.game.input.keys.includes("KeyA")) {
+    if (
+      this.game.input.keys.includes("KeyA") ||
+      this.game.input.keys.includes("ArrowLeft")
+    ) {
       const steeringMultiplier = Math.max(0.3, Math.min(1, 1 - velocity / 150));
       this.targetSteering = this.maxSteerVal * steeringMultiplier;
-    } else if (this.game.input.keys.includes("KeyD")) {
+    } else if (
+      this.game.input.keys.includes("KeyD") ||
+      this.game.input.keys.includes("ArrowRight")
+    ) {
       const steeringMultiplier = Math.max(0.3, Math.min(1, 1 - velocity / 150));
       this.targetSteering = -this.maxSteerVal * steeringMultiplier;
     } else this.targetSteering *= 1 - this.steeringReturnSpeed;
@@ -348,8 +360,14 @@ export default class Player {
     this.vehicle.applyEngineForce(rearEngineForce, 3);
 
     if (
-      !this.game.input.keys.includes("KeyW") &&
-      !this.game.input.keys.includes("KeyS")
+      !(
+        this.game.input.keys.includes("KeyW") &&
+        this.game.input.keys.includes("ArrowUp")
+      ) &&
+      !(
+        this.game.input.keys.includes("KeyS") &&
+        this.game.input.keys.includes("ArrowDown")
+      )
     )
       this.smoothStop(velocity);
 
@@ -364,8 +382,10 @@ export default class Player {
     let targetRPM = this.currentSpeed * rpmFactor;
 
     if (
-      this.game.input.keys.includes("KeyW") ||
-      this.game.input.keys.includes("KeyS")
+      (this.game.input.keys.includes("KeyW") &&
+        this.game.input.keys.includes("ArrowUp")) ||
+      (this.game.input.keys.includes("KeyS") &&
+        this.game.input.keys.includes("ArrowDown"))
     )
       targetRPM = THREE.MathUtils.lerp(targetRPM, this.maxRPM, 0.1);
     else targetRPM = Math.max(targetRPM, this.minRPM);
