@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://cloud-hz5asbw30-hack-club-bot.vercel.app/0logo.png">
+  <img src="https://cloud-k51l9vivt-hack-club-bot.vercel.app/0logo.png">
   <br />
   <i>Speed. Skill. Survival.</i>
   <br />
