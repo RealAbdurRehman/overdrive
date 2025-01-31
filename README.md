@@ -10,7 +10,7 @@
 **OverDrive** is an exhilarating, action-packed driving game that throws players into a world of fast-paced, adrenaline-pumping action. Every playthrough is a brutal test of skill, speed, and precision, where only the quickest and most agile can survive. With no room for error, you'll navigate through a relentless series of ever-escalating obstacles, demanding lightning-fast reflexes, pinpoint accuracy, and an unyielding drive to keep pushing forward.
 
 <p align="center">
-	<img src="" alt="Demo">
+	<img src="https://cloud-3n7wt7o77-hack-club-bot.vercel.app/0image_2025-01-31_at_6.34.49_pm.jpeg" alt="Demo">
 	<br>
 	<a href="https://overdrive-indol.vercel.app/">Live demo</a>
 	<br>
@@ -60,8 +60,8 @@
 
 ## 📷 In-Game Shots
 
-![OverDrive Screenshot 1]()
-![OverDrive Screenshot 2]()
+![OverDrive Screenshot 1](https://cloud-liqssqaba-hack-club-bot.vercel.app/0image_2025-01-31_at_6.33.40_pm.jpeg)
+![OverDrive Screenshot 2](https://cloud-kxod1db9r-hack-club-bot.vercel.app/0image_2025-01-31_at_6.33.39_pm.jpeg)
 
 ## Technologies
 
